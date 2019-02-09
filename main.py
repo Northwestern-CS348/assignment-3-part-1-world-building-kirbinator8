@@ -1,33 +1,35 @@
 import unittest
-import read, copy
+import read
+import copy
 from logical_classes import *
 from kb_and_inference_engine import *
 from game_masters import *
+
 
 class KBTest(unittest.TestCase):
 
     def checkKb(self, kb, required, forbidden):
         for v in required:
-            self.assertTrue(kb.kb_ask(parse_input(v)), \
-                'Expected Fact cannot be found in KB: "%s"' % str(v))
+            self.assertTrue(kb.kb_ask(parse_input(v)),
+                            'Expected Fact cannot be found in KB: "%s"' % str(v))
         for v in forbidden:
-            self.assertFalse(kb.kb_ask(parse_input(v)), \
-                'Unexpected Fact found in KB: "%s"' % str(v))
+            self.assertFalse(kb.kb_ask(parse_input(v)),
+                             'Unexpected Fact found in KB: "%s"' % str(v))
 
     def checkMovables(self, gm, expected):
         movables = gm.getMovables()
         if expected:
-            self.assertTrue(movables, \
-                'None of the expected Facts with MOVABLE predicate ' \
-                'can be found: "%s"' % [str(x) for x in expected])
+            self.assertTrue(movables,
+                            'None of the expected Facts with MOVABLE predicate '
+                            'can be found: "%s"' % [str(x) for x in expected])
             for e in expected:
-                self.assertTrue(parse_input(e).statement in movables,\
-                    'Expected Fact with MOVABLE predicate '\
-                    'cannot be found in KB: "%s"' % str(e))
+                self.assertTrue(parse_input(e).statement in movables,
+                                'Expected Fact with MOVABLE predicate '
+                                'cannot be found in KB: "%s"' % str(e))
         else:
-            self.assertFalse(movables, \
-                'Unexpecting Facts with MOVABLE predicate: %s'\
-                    % [str(x) for x in movables])
+            self.assertFalse(movables,
+                             'Unexpecting Facts with MOVABLE predicate: %s'
+                             % [str(x) for x in movables])
 
     def test01(self):
         th = TowerOfHanoiGame()
